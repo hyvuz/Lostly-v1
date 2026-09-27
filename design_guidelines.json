@@ -1,0 +1,231 @@
+{
+  "theme": {
+    "mode": "light",
+    "archetype": "Organic & Earthy Notebook Sketch (Neo-Doodle Campus)",
+    "description": "Tactile warm graph-paper/college notebook vibe, playful hand-drawn charcoal lines, subtle washi tape, organic highlighter swatches, and squiggly SVG doodles. Feels like a student community bulletin board rather than a sterile SaaS."
+  },
+  "typography": {
+    "google_fonts_import": "@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');",
+    "fonts": {
+      "display": "Caveat, cursive, sans-serif",
+      "body": "Plus Jakarta Sans, sans-serif",
+      "mono": "Space Mono, monospace"
+    },
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight font-display",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight font-display",
+      "h3": "text-xl sm:text-2xl font-semibold",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-base leading-relaxed text-stone-700",
+      "meta": "text-xs sm:text-sm font-mono tracking-wide text-stone-500",
+      "handwriting_accent": "font-display text-2xl text-amber-700"
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": "#FDFBF7",
+      "card_surface": "#FFFFFF",
+      "notebook_grid_line": "#E7E2D8",
+      "charcoal_ink": "#1E1E1E",
+      "pencil_grey": "#524F4A",
+      "accent_primary": "#E05A36",
+      "accent_primary_hover": "#C84B29",
+      "accent_primary_light": "#FFF0EC",
+      "highlighter_yellow": "#FEF08A",
+      "highlighter_mint": "#BBF7D0",
+      "highlighter_blue": "#BAE6FD",
+      "highlighter_coral": "#FECDD3",
+      "found_state_bg": "#F0FDF4",
+      "found_state_border": "#86EFAC",
+      "found_state_text": "#166534",
+      "missing_state_bg": "#FEF2F2",
+      "missing_state_border": "#FCA5A5",
+      "missing_state_text": "#991B1B"
+    },
+    "guidelines": "Never use pure #000000; always use warm charcoal #1E1E1E. Single punchy primary accent is Campus Terracotta (#E05A36) balanced with soft highlighter tints and warm graph notebook backdrop."
+  },
+  "doodle_and_sketch_system": {
+    "svg_doodles": {
+      "pin_clip": "<svg class='w-6 h-6 rotate-12 -top-3 left-6 absolute pointer-events-none' viewBox='0 0 24 24' fill='none' stroke='#E05A36' strokeWidth='2' strokeLinecap='round'><path d='M7 3v7a5 5 0 0 0 10 0V3M12 17v4' /></svg>",
+      "scribble_circle": "M10 50 C 30 10, 70 10, 90 50 C 110 90, -10 90, 10 50 Z",
+      "wavy_underline": "M0 10 Q 15 0, 30 10 T 60 10 T 90 10 T 120 10",
+      "drawn_arrow": "M5 25 Q 30 5, 55 20 L 50 12 M 55 20 L 46 25",
+      "tape_strip": "bg-amber-100/80 border-t border-b border-amber-300/40 transform -rotate-2 shadow-xs backdrop-blur-xs"
+    },
+    "sketch_borders": {
+      "wobbly_border": "border-2 border-stone-800 rounded-2xl shadow-[3px_3px_0px_#1E1E1E] hover:shadow-[5px_5px_0px_#1E1E1E] transition-shadow",
+      "pinned_card": "border-2 border-stone-800/80 rounded-xl bg-white shadow-[4px_4px_0px_#1E1E1E] relative",
+      "found_card": "border-2 border-emerald-600/70 rounded-xl bg-[#F6FCF7] opacity-90 shadow-[2px_2px_0px_#166534]"
+    }
+  },
+  "layouts_and_grids": {
+    "flow_stepper": "Centered interactive multi-step card (max-w-xl mx-auto) with lively progress indicator 1/4 to 4/4 and playful doodle prompts",
+    "board_grid": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pt-6",
+    "search_filter_bar": "flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between bg-stone-100/70 p-3 sm:p-4 rounded-2xl border-2 border-stone-800"
+  },
+  "category_definitions": [
+    { "id": "all", "label": "All Items", "icon": "Layers", "color": "stone" },
+    { "id": "electronics", "label": "Electronics", "icon": "Laptop", "color": "blue" },
+    { "id": "personal", "label": "Personal Items", "icon": "Key", "color": "amber" },
+    { "id": "bags", "label": "Bags & Carriers", "icon": "Backpack", "color": "purple" },
+    { "id": "other", "label": "Other", "icon": "Sparkles", "color": "rose" }
+  ],
+  "sample_seed_data": [
+    {
+      "id": "item-1",
+      "title": "MacBook Air M2 (Midnight Blue)",
+      "category": "electronics",
+      "itemType": "Laptop",
+      "color": "Midnight Dark Blue",
+      "description": "Has a yellow cat sticker on the front lid and a scratch near the USB-C port.",
+      "locationKnown": true,
+      "location": "Main Campus Library 2nd Floor Silent Study",
+      "timeframe": "Today",
+      "approxTime": "Around 2:15 PM after CHEM 101",
+      "status": "missing",
+      "createdAt": "10 minutes ago",
+      "clues": [
+        {
+          "id": "c-1",
+          "text": "Saw a midnight laptop turned into the library front help desk around 3pm! Ask Sarah at desk 2.",
+          "author": "Campus Peer",
+          "timestamp": "5m ago"
+        }
+      ]
+    },
+    {
+      "id": "item-2",
+      "title": "Sony WH-1000XM4 Silver Headphones",
+      "category": "electronics",
+      "itemType": "Headphones",
+      "color": "Silver / Off-white",
+      "description": "Left inside a black zip carrying case. Has a small carabiner attached to handle.",
+      "locationKnown": true,
+      "location": "Student Union Cafe, booth near the window",
+      "timeframe": "Yesterday",
+      "approxTime": "Around 5:30 PM dinner rush",
+      "status": "missing",
+      "createdAt": "3 hours ago",
+      "clues": []
+    },
+    {
+      "id": "item-3",
+      "title": "Dorm Keys with Green Frog Lanyard",
+      "category": "personal",
+      "itemType": "Keys",
+      "color": "Green lanyard / Brass keys",
+      "description": "3 keys total (dorm room, mailbox, bicycle U-lock key) + mini rubber frog keychain.",
+      "locationKnown": false,
+      "location": "Not sure (Walked from Science Quad to Dining Hall)",
+      "timeframe": "Today",
+      "approxTime": "Morning around 10:00 AM",
+      "status": "missing",
+      "createdAt": "1 hour ago",
+      "clues": [
+        {
+          "id": "c-2",
+          "text": "Someone posted on the campus discord that keys with a frog were found on the benches outside Science Hall!",
+          "author": "Bio Major 27",
+          "timestamp": "42m ago"
+        }
+      ]
+    },
+    {
+      "id": "item-4",
+      "title": "Brown Leather Cardholder Wallet with Student ID",
+      "category": "personal",
+      "itemType": "Wallet/ID",
+      "color": "Worn tan/brown leather",
+      "description": "Contains student ID card ending in #4092, metro pass, and driver's license.",
+      "locationKnown": true,
+      "location": "Gym / Recreation Center Locker Room bench",
+      "timeframe": "Yesterday",
+      "approxTime": "Evening 7:00 PM workout",
+      "status": "found",
+      "createdAt": "Yesterday",
+      "clues": [
+        {
+          "id": "c-3",
+          "text": "Turned into the gym equipment rental counter!",
+          "author": "Rec Center Staff",
+          "timestamp": "Yesterday"
+        }
+      ]
+    },
+    {
+      "id": "item-5",
+      "title": "Hydro Flask 32oz Mustard Yellow Water Bottle",
+      "category": "other",
+      "itemType": "Other",
+      "color": "Mustard Yellow",
+      "description": "Dented bottom corner, covered in National Park stickers.",
+      "locationKnown": true,
+      "location": "Lecture Hall B, 3rd row desk",
+      "timeframe": "This week",
+      "approxTime": "Tuesday afternoon",
+      "status": "missing",
+      "createdAt": "1 day ago",
+      "clues": []
+    }
+  ],
+  "image_urls": [
+    {
+      "category": "campus_study",
+      "url": "https://images.unsplash.com/photo-1503676593575-d732ab11be71?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHw0fHxzdHVkZW50JTIwY2FtcHVzJTIwbG9zdCUyMGl0ZW1zfGVufDB8fHx8MTc5MDUyNzcwOHww&ixlib=rb-4.1.0&q=85",
+      "description": "Campus notebooks and coffee cup on student stone bench"
+    },
+    {
+      "category": "campus_students",
+      "url": "https://images.unsplash.com/photo-1663162550938-60f70fab5d31?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwY2FtcHVzJTIwbG9zdCUyMGl0ZW1zfGVufDB8fHx8MTc5MDUyNzcwOHww&ixlib=rb-4.1.0&q=85",
+      "description": "Students walking on campus walkway with backpacks"
+    }
+  ],
+  "component_structure": {
+    "Header": {
+      "file": "/app/frontend/src/components/Header.jsx",
+      "description": "Sticky top bar with Lostly hand-drawn logo, slogan 'Campus Lost & Found, peer powered', view toggle (Report vs Browse Board), and active lost counter badge"
+    },
+    "ReportFlow": {
+      "file": "/app/frontend/src/components/ReportFlow.jsx",
+      "description": "Conversational 4-step card with back/next controls, progress pills, lively doodle accents, and instant submission into localStorage"
+    },
+    "ItemsBoard": {
+      "file": "/app/frontend/src/components/ItemsBoard.jsx",
+      "description": "Search input, category pill filters, status filters (All | Missing | Found), item grid, empty state with sketch doodles"
+    },
+    "ItemCard": {
+      "file": "/app/frontend/src/components/ItemCard.jsx",
+      "description": "Sketch card with washi tape/pin doodle, category badge, time/location clues, found toggle, and clue list"
+    },
+    "ClueModal": {
+      "file": "/app/frontend/src/components/ClueModal.jsx",
+      "description": "Where do you think they should look? modal dialog with hand-drawn styling and immediate clue posting"
+    }
+  },
+  "test_ids": {
+    "nav_brand": "brand-logo",
+    "nav_report_tab": "nav-report-tab",
+    "nav_board_tab": "nav-board-tab",
+    "step_indicator": "flow-progress-step",
+    "category_select_prefix": "category-btn-",
+    "step_next_btn": "flow-next-button",
+    "step_back_btn": "flow-back-button",
+    "step_submit_btn": "flow-submit-button",
+    "board_search_input": "board-search-input",
+    "filter_chip_prefix": "filter-chip-",
+    "item_card_prefix": "lost-item-card-",
+    "item_status_toggle_prefix": "item-status-toggle-",
+    "item_clue_button_prefix": "item-clue-button-",
+    "clue_modal_input": "clue-modal-textarea",
+    "clue_modal_submit": "clue-modal-submit-btn"
+  },
+  "instructions_to_main_agent": [
+    "Load Google Fonts (Caveat, Plus Jakarta Sans, Space Mono) in index.html or index.css for authentic notebook doodle typography.",
+    "Implement the 4-step reporting flow on first open so the user is immediately prompted with conversational questions.",
+    "Store all items and clues in browser localStorage using key 'lostly_items_v1' and seed with provided sample items if empty.",
+    "Ensure the 'I might know something' modal allows typing location clues and appends them to the corresponding item immediately.",
+    "Ensure item status can be toggled between 'Still Missing' and 'Found ✓' with distinct visual styling (green tint, check badge, strikethrough/dimmed title).",
+    "Include playful SVG doodle accents (paperclip, wobbly underlines, pin mark, hand-drawn arrows) to satisfy the 'sketchy with doodles' user choice.",
+    "Verify all interactive buttons, inputs, and toggles have required data-testid attributes."
+  ]
+}
