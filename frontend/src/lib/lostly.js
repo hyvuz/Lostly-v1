@@ -173,3 +173,52 @@ export function timeAgo(ts) {
   if (days === 1) return "yesterday";
   return `${days}d ago`;
 }
+
+export const TIME_FILTERS = [
+  { id: "all", label: "All time" },
+  { id: "today", label: "Today" },
+  { id: "week", label: "This Week" },
+  { id: "month", label: "This Month" },
+  { id: "year", label: "This Year" },
+];
+
+export function withinTimeFilter(ts, filter) {
+  if (filter === "all" || typeof ts !== "number") return true;
+  const now = new Date();
+  const d = new Date(ts);
+  if (filter === "today") return d.toDateString() === now.toDateString();
+  const diffDays = (now - d) / 86400000;
+  if (filter === "week") return diffDays <= 7;
+  if (filter === "month") return diffDays <= 31;
+  if (filter === "year") return diffDays <= 366;
+  return true;
+}
+
+// Downscale an uploaded image to a small JPEG data URL so it fits in localStorage.
+export function fileToResizedDataUrl(file, maxSize = 640) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > height && width > maxSize) {
+          height = Math.round((height * maxSize) / width);
+          width = maxSize;
+        } else if (height > maxSize) {
+          width = Math.round((width * maxSize) / height);
+          height = maxSize;
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.75));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}

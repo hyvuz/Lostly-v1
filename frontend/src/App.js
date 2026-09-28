@@ -1,15 +1,24 @@
 import { useEffect, useMemo, useState } from "react";
 import "@/App.css";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
-import { ReportFlow } from "@/components/ReportFlow";
+import Splash from "@/pages/Splash";
+import Home from "@/pages/Home";
+import ReportForm from "@/pages/ReportForm";
 import { ItemsBoard } from "@/components/ItemsBoard";
 import { loadItems, saveItems } from "@/lib/lostly";
 
-function App() {
+function Shell() {
+  const location = useLocation();
   const [items, setItems] = useState([]);
-  const [view, setView] = useState("report");
 
   useEffect(() => {
     setItems(loadItems());
@@ -33,10 +42,6 @@ function App() {
       clues: [],
     };
     setItems((prev) => [newItem, ...prev]);
-    setView("board");
-    toast.success("Lost item posted!", {
-      description: "Other students can now help you find it.",
-    });
   };
 
   const handleAddClue = (itemId, text) => {
@@ -45,10 +50,7 @@ function App() {
         it.id === itemId
           ? {
               ...it,
-              clues: [
-                ...it.clues,
-                { id: `c-${Date.now()}`, text, createdAt: Date.now() },
-              ],
+              clues: [...it.clues, { id: `c-${Date.now()}`, text, createdAt: Date.now() }],
             }
           : it
       )
@@ -66,20 +68,38 @@ function App() {
     );
   };
 
+  const showHeader = location.pathname !== "/";
+
   return (
     <div className="min-h-screen">
-      <Header view={view} onView={setView} missingCount={missingCount} />
-      {view === "report" ? (
-        <ReportFlow onSubmit={handleReportSubmit} />
-      ) : (
-        <ItemsBoard
-          items={items}
-          onAddClue={handleAddClue}
-          onToggleStatus={handleToggleStatus}
-          onReport={() => setView("report")}
+      {showHeader && <Header missingCount={missingCount} />}
+      <Routes>
+        <Route path="/" element={<Splash />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/report" element={<ReportForm onSubmit={handleReportSubmit} />} />
+        <Route
+          path="/board"
+          element={
+            <ItemsBoard
+              items={items}
+              onAddClue={handleAddClue}
+              onToggleStatus={handleToggleStatus}
+            />
+          }
         />
-      )}
+        <Route path="*" element={<Navigate to="/home" replace />} />
+      </Routes>
       <Toaster position="top-center" richColors />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Shell />
+      </BrowserRouter>
     </div>
   );
 }

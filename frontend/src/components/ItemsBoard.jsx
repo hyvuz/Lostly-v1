@@ -1,27 +1,60 @@
 import { useMemo, useState } from "react";
-import { SearchFilterBar } from "@/components/SearchFilterBar";
+import { useNavigate } from "react-router-dom";
+import { Search, PlusCircle, PackageOpen } from "lucide-react";
 import { ItemCard } from "@/components/ItemCard";
 import { ClueModal } from "@/components/ClueModal";
 import { ScribbleCircle } from "@/components/Doodles";
-import { PackageOpen, Plus } from "lucide-react";
+import {
+  CATEGORY_FILTERS,
+  TIME_FILTERS,
+  withinTimeFilter,
+} from "@/lib/lostly";
 
-const STATUS_TABS = [
+const STATUS_FILTERS = [
   { id: "all", label: "All" },
   { id: "missing", label: "Still Missing" },
   { id: "found", label: "Found" },
 ];
 
-export const ItemsBoard = ({ items, onAddClue, onToggleStatus, onReport }) => {
+const FilterGroup = ({ label, children }) => (
+  <div className="flex flex-wrap items-center gap-2">
+    <span className="mr-1 font-mono text-[11px] uppercase tracking-wider text-stone-400">
+      {label}
+    </span>
+    {children}
+  </div>
+);
+
+const Pill = ({ active, onClick, children, testId, icon: Icon }) => (
+  <button
+    data-testid={testId}
+    onClick={onClick}
+    className={
+      "inline-flex items-center gap-1.5 rounded-full border-2 px-3.5 py-1.5 text-sm font-bold transition-all " +
+      (active
+        ? "border-stone-900 bg-primary text-white shadow-[2px_2px_0px_rgba(30,30,30,0.9)]"
+        : "border-stone-800 bg-white text-stone-800 shadow-[2px_2px_0px_rgba(30,30,30,0.85)] hover:-translate-y-0.5 hover:bg-stone-100")
+    }
+  >
+    {Icon && <Icon className="h-4 w-4" />}
+    {children}
+  </button>
+);
+
+export const ItemsBoard = ({ items, onAddClue, onToggleStatus }) => {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
-  const [statusTab, setStatusTab] = useState("all");
+  const [timeFilter, setTimeFilter] = useState("all");
+  const [status, setStatus] = useState("all");
   const [clueItem, setClueItem] = useState(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items
       .filter((it) => (category === "all" ? true : it.category === category))
-      .filter((it) => (statusTab === "all" ? true : it.status === statusTab))
+      .filter((it) => (status === "all" ? true : it.status === status))
+      .filter((it) => withinTimeFilter(it.createdAt, timeFilter))
       .filter((it) => {
         if (!q) return true;
         return (
@@ -32,52 +65,83 @@ export const ItemsBoard = ({ items, onAddClue, onToggleStatus, onReport }) => {
         );
       })
       .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-  }, [items, query, category, statusTab]);
+  }, [items, query, category, timeFilter, status]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-6">
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="relative">
-          <ScribbleCircle className="absolute -left-4 -top-3 h-14 w-20 opacity-40" />
-          <h2 className="relative font-display text-4xl font-bold text-stone-900 sm:text-5xl">
-            Lost Items Board
-          </h2>
+          <ScribbleCircle className="pointer-events-none absolute -left-3 -top-3 h-12 w-20 opacity-30" />
+          <h1 className="relative font-display text-5xl font-bold text-stone-900 sm:text-6xl">
+            Missing Items
+          </h1>
           <p className="mt-1 text-sm text-stone-500">
-            Spot something? Drop a clue and help a fellow student out.
+            See something familiar? Help another student find it.
           </p>
         </div>
         <button
           data-testid="board-report-cta"
-          onClick={onReport}
-          className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-stone-900 bg-primary px-5 py-3 text-base font-bold text-white shadow-[3px_3px_0px_#1E1E1E] transition-all hover:-translate-y-0.5"
+          onClick={() => navigate("/report")}
+          className="inline-flex items-center justify-center gap-2 rounded-[13px_15px_12px_16px/15px_12px_16px_13px] border-2 border-stone-900 bg-primary px-5 py-3 text-base font-bold text-white shadow-[3px_3px_0px_rgba(30,30,30,0.9)] transition-all hover:-translate-y-0.5"
         >
-          <Plus className="h-5 w-5" /> Report a lost item
+          <PlusCircle className="h-5 w-5" /> Report a lost item
         </button>
       </div>
 
-      <SearchFilterBar
-        query={query}
-        onQuery={setQuery}
-        category={category}
-        onCategory={setCategory}
-      />
+      {/* Grouped filter area */}
+      <div className="rounded-[16px_19px_15px_20px/19px_15px_20px_16px] border-2 border-stone-900 bg-white/70 p-4 shadow-[3px_3px_0px_rgba(30,30,30,0.85)] sm:p-5">
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-400" />
+          <input
+            data-testid="board-search-input"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by item name or type…"
+            className="w-full rounded-xl border-2 border-stone-800 bg-white py-3 pl-12 pr-4 text-base font-medium outline-none transition-shadow focus:shadow-[3px_3px_0px_#E05A36]"
+          />
+        </div>
 
-      <div className="mt-4 flex gap-2">
-        {STATUS_TABS.map((t) => (
-          <button
-            key={t.id}
-            data-testid={`status-tab-${t.id}`}
-            onClick={() => setStatusTab(t.id)}
-            className={
-              "rounded-full px-4 py-1.5 text-sm font-semibold transition-colors " +
-              (statusTab === t.id
-                ? "bg-stone-900 text-white"
-                : "bg-stone-100 text-stone-600 hover:bg-stone-200")
-            }
-          >
-            {t.label}
-          </button>
-        ))}
+        <div className="mt-4 space-y-3">
+          <FilterGroup label="Category">
+            {CATEGORY_FILTERS.map((f) => (
+              <Pill
+                key={f.id}
+                testId={`filter-chip-${f.id}`}
+                icon={f.icon}
+                active={category === f.id}
+                onClick={() => setCategory(f.id)}
+              >
+                {f.label}
+              </Pill>
+            ))}
+          </FilterGroup>
+
+          <FilterGroup label="Time">
+            {TIME_FILTERS.map((f) => (
+              <Pill
+                key={f.id}
+                testId={`time-chip-${f.id}`}
+                active={timeFilter === f.id}
+                onClick={() => setTimeFilter(f.id)}
+              >
+                {f.label}
+              </Pill>
+            ))}
+          </FilterGroup>
+
+          <FilterGroup label="Status">
+            {STATUS_FILTERS.map((f) => (
+              <Pill
+                key={f.id}
+                testId={`status-chip-${f.id}`}
+                active={status === f.id}
+                onClick={() => setStatus(f.id)}
+              >
+                {f.label}
+              </Pill>
+            ))}
+          </FilterGroup>
+        </div>
       </div>
 
       {filtered.length === 0 ? (
@@ -89,7 +153,7 @@ export const ItemsBoard = ({ items, onAddClue, onToggleStatus, onReport }) => {
           </p>
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item) => (
             <ItemCard
               key={item.id}
