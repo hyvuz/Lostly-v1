@@ -72,7 +72,7 @@ function Shell() {
 
   return (
     <div className="min-h-screen">
-      {showHeader && <Header missingCount={missingCount} />}
+      {showHeader && <Header />}
       <Routes>
         <Route path="/" element={<Splash />} />
         <Route path="/home" element={<Home />} />
