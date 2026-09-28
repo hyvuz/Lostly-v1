@@ -85,15 +85,21 @@ export const ItemCard = ({ item, onClue, onToggleStatus }) => {
           <span className="font-mono text-[10px] text-stone-400">{timeAgo(item.createdAt)}</span>
         </div>
 
-        <div className="mt-3 flex gap-2">
-          <button
-            data-testid={`item-clue-button-${item.id}`}
-            onClick={() => onClue(item)}
-            className="flex-1 rounded-[10px_13px_9px_12px/12px_9px_13px_10px] border-2 border-stone-900 bg-white px-3 py-2 text-xs font-bold text-stone-900 shadow-[2px_2px_0px_rgba(30,30,30,0.85)] transition-all hover:-translate-y-0.5 hover:bg-amber-50"
-          >
-            I might know something
-          </button>
-        </div>
+        {item.ownReport ? (
+          <div className="mt-3 rounded-[10px_13px_9px_12px/12px_9px_13px_10px] border-2 border-dashed border-stone-300 bg-stone-50 px-3 py-2 text-center text-xs font-bold text-stone-500">
+            Your report
+          </div>
+        ) : (
+          <div className="mt-3 flex gap-2">
+            <button
+              data-testid={`item-clue-button-${item.id}`}
+              onClick={() => onClue(item)}
+              className="flex-1 rounded-[10px_13px_9px_12px/12px_9px_13px_10px] border-2 border-stone-900 bg-white px-3 py-2 text-xs font-bold text-stone-900 shadow-[2px_2px_0px_rgba(30,30,30,0.85)] transition-all hover:-translate-y-0.5 hover:bg-amber-50"
+            >
+              I might know something
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

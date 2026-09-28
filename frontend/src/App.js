@@ -38,6 +38,7 @@ function Shell() {
       id: `item-${Date.now()}`,
       ...data,
       status: "missing",
+      ownReport: true,
       createdAt: Date.now(),
       clues: [],
     };
