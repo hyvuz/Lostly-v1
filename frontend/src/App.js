@@ -14,6 +14,7 @@ import Splash from "@/pages/Splash";
 import Home from "@/pages/Home";
 import ReportForm from "@/pages/ReportForm";
 import { ItemsBoard } from "@/components/ItemsBoard";
+import MyItems from "@/pages/MyItems";
 import { loadItems, saveItems } from "@/lib/lostly";
 
 function Shell() {
@@ -69,6 +70,13 @@ function Shell() {
     );
   };
 
+  const handleSetStatus = (itemId, status) => {
+    setItems((prev) =>
+      prev.map((it) => (it.id === itemId ? { ...it, status } : it))
+    );
+    toast.success(status === "found" ? "Marked as found ✓" : "Marked as still missing");
+  };
+
   const showHeader = location.pathname !== "/";
 
   return (
@@ -89,6 +97,10 @@ function Shell() {
           }
         />
         <Route path="*" element={<Navigate to="/home" replace />} />
+        <Route
+          path="/my-items"
+          element={<MyItems items={items} onSetStatus={handleSetStatus} />}
+        />
       </Routes>
       <Toaster position="top-center" richColors />
     </div>
