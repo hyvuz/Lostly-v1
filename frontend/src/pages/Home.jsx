@@ -11,10 +11,6 @@ export default function Home() {
       <ScribbleCircle className="pointer-events-none absolute left-2 top-10 hidden h-24 w-32 opacity-30 sm:block" />
       <Squiggle className="pointer-events-none absolute right-4 top-24 hidden h-5 w-24 opacity-40 sm:block" />
 
-      <span className="animate-fade-up mb-6 inline-flex items-center gap-2 rounded-full border-2 border-stone-800 bg-white px-4 py-1.5 font-mono text-xs uppercase tracking-widest text-stone-600 shadow-[2px_2px_0px_rgba(30,30,30,0.85)]">
-        📌 peer-powered campus board
-      </span>
-
       <h1 className="animate-fade-up font-display text-5xl font-bold leading-[1.05] text-stone-900 sm:text-6xl lg:text-7xl" style={{ animationDelay: "0.05s" }}>
         Lost something?
         <br />
