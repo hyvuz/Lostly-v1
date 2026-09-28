@@ -86,26 +86,12 @@ export const ItemCard = ({ item, onClue, onToggleStatus }) => {
         </div>
 
         <div className="mt-3 flex gap-2">
-          {!found && (
-            <button
-              data-testid={`item-clue-button-${item.id}`}
-              onClick={() => onClue(item)}
-              className="flex-1 rounded-[10px_13px_9px_12px/12px_9px_13px_10px] border-2 border-stone-900 bg-white px-3 py-2 text-xs font-bold text-stone-900 shadow-[2px_2px_0px_rgba(30,30,30,0.85)] transition-all hover:-translate-y-0.5 hover:bg-amber-50"
-            >
-              I might know something
-            </button>
-          )}
           <button
-            data-testid={`item-status-toggle-${item.id}`}
-            onClick={() => onToggleStatus(item.id)}
-            className={
-              "rounded-[10px_13px_9px_12px/12px_9px_13px_10px] border-2 border-stone-900 px-3 py-2 text-xs font-bold shadow-[2px_2px_0px_rgba(30,30,30,0.85)] transition-all hover:-translate-y-0.5 " +
-              (found
-                ? "flex-1 bg-white text-stone-800 hover:bg-stone-100"
-                : "bg-emerald-500 text-white hover:bg-emerald-600")
-            }
+            data-testid={`item-clue-button-${item.id}`}
+            onClick={() => onClue(item)}
+            className="flex-1 rounded-[10px_13px_9px_12px/12px_9px_13px_10px] border-2 border-stone-900 bg-white px-3 py-2 text-xs font-bold text-stone-900 shadow-[2px_2px_0px_rgba(30,30,30,0.85)] transition-all hover:-translate-y-0.5 hover:bg-amber-50"
           >
-            {found ? "Mark missing" : "Mark Found ✓"}
+            I might know something
           </button>
         </div>
       </div>
