@@ -79,7 +79,7 @@ export const ItemCard = ({ item, onClue, onToggleStatus }) => {
           </div>
         )}
 
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mt-auto flex items-center justify-between pt-3">
           <span className="inline-flex items-center gap-1.5 font-mono text-xs text-stone-500">
             <MessageCircle className="h-4 w-4" />
             {item.clues.length} {item.clues.length === 1 ? "clue" : "clues"}

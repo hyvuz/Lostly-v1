@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, PlusCircle, PackageOpen } from "lucide-react";
+import { Search, PlusCircle, PackageOpen, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { ItemCard } from "@/components/ItemCard";
 import { ClueModal } from "@/components/ClueModal";
 import { ScribbleCircle } from "@/components/Doodles";
@@ -48,6 +48,12 @@ export const ItemsBoard = ({ items, onAddClue, onToggleStatus }) => {
   const [timeFilter, setTimeFilter] = useState("all");
   const [status, setStatus] = useState("all");
   const [clueItem, setClueItem] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
+
+  const activeFilterCount =
+    (category !== "all" ? 1 : 0) +
+    (timeFilter !== "all" ? 1 : 0) +
+    (status !== "all" ? 1 : 0);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -88,60 +94,84 @@ export const ItemsBoard = ({ items, onAddClue, onToggleStatus }) => {
         </button>
       </div>
 
-      {/* Grouped filter area */}
+      {/* Search + collapsible filter area */}
       <div className="rounded-[16px_19px_15px_20px/19px_15px_20px_16px] border-2 border-stone-900 bg-white/70 p-4 shadow-[3px_3px_0px_rgba(30,30,30,0.85)] sm:p-5">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-400" />
-          <input
-            data-testid="board-search-input"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by item name or type…"
-            className="w-full rounded-xl border-2 border-stone-800 bg-white py-3 pl-12 pr-4 text-base font-medium outline-none transition-shadow focus:shadow-[3px_3px_0px_#E05A36]"
-          />
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-400" />
+            <input
+              data-testid="board-search-input"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by item name or type…"
+              className="w-full rounded-xl border-2 border-stone-800 bg-white py-3 pl-12 pr-4 text-base font-medium outline-none transition-shadow focus:shadow-[3px_3px_0px_#E05A36]"
+            />
+          </div>
+          <button
+            data-testid="board-filter-toggle"
+            aria-expanded={showFilters}
+            onClick={() => setShowFilters((v) => !v)}
+            className={
+              "relative inline-flex shrink-0 items-center gap-2 rounded-xl border-2 border-stone-900 px-4 py-3 text-sm font-bold shadow-[2px_2px_0px_rgba(30,30,30,0.85)] transition-all hover:-translate-y-0.5 " +
+              (showFilters ? "bg-primary text-white" : "bg-white text-stone-800 hover:bg-stone-100")
+            }
+          >
+            <SlidersHorizontal className="h-5 w-5" />
+            <span className="hidden sm:inline">Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-stone-900 px-1 font-mono text-[10px] text-white">
+                {activeFilterCount}
+              </span>
+            )}
+            <ChevronDown
+              className={"h-4 w-4 transition-transform " + (showFilters ? "rotate-180" : "")}
+            />
+          </button>
         </div>
 
-        <div className="mt-4 space-y-3">
-          <FilterGroup label="Category">
-            {CATEGORY_FILTERS.map((f) => (
-              <Pill
-                key={f.id}
-                testId={`filter-chip-${f.id}`}
-                icon={f.icon}
-                active={category === f.id}
-                onClick={() => setCategory(f.id)}
-              >
-                {f.label}
-              </Pill>
-            ))}
-          </FilterGroup>
+        {showFilters && (
+          <div className="mt-4 animate-pop-in space-y-3 border-t-2 border-dashed border-stone-300 pt-4">
+            <FilterGroup label="Category">
+              {CATEGORY_FILTERS.map((f) => (
+                <Pill
+                  key={f.id}
+                  testId={`filter-chip-${f.id}`}
+                  icon={f.icon}
+                  active={category === f.id}
+                  onClick={() => setCategory(f.id)}
+                >
+                  {f.label}
+                </Pill>
+              ))}
+            </FilterGroup>
 
-          <FilterGroup label="Time">
-            {TIME_FILTERS.map((f) => (
-              <Pill
-                key={f.id}
-                testId={`time-chip-${f.id}`}
-                active={timeFilter === f.id}
-                onClick={() => setTimeFilter(f.id)}
-              >
-                {f.label}
-              </Pill>
-            ))}
-          </FilterGroup>
+            <FilterGroup label="Time">
+              {TIME_FILTERS.map((f) => (
+                <Pill
+                  key={f.id}
+                  testId={`time-chip-${f.id}`}
+                  active={timeFilter === f.id}
+                  onClick={() => setTimeFilter(f.id)}
+                >
+                  {f.label}
+                </Pill>
+              ))}
+            </FilterGroup>
 
-          <FilterGroup label="Status">
-            {STATUS_FILTERS.map((f) => (
-              <Pill
-                key={f.id}
-                testId={`status-chip-${f.id}`}
-                active={status === f.id}
-                onClick={() => setStatus(f.id)}
-              >
-                {f.label}
-              </Pill>
-            ))}
-          </FilterGroup>
-        </div>
+            <FilterGroup label="Status">
+              {STATUS_FILTERS.map((f) => (
+                <Pill
+                  key={f.id}
+                  testId={`status-chip-${f.id}`}
+                  active={status === f.id}
+                  onClick={() => setStatus(f.id)}
+                >
+                  {f.label}
+                </Pill>
+              ))}
+            </FilterGroup>
+          </div>
+        )}
       </div>
 
       {filtered.length === 0 ? (
