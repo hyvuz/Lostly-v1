@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { MapPinned } from "lucide-react";
 
 const linkClass = ({ isActive }) =>
   "rounded-full px-3 py-1.5 text-sm font-bold transition-colors sm:px-4 " +
@@ -17,9 +16,11 @@ export const Header = ({ missingCount }) => {
           onClick={() => navigate("/home")}
           className="flex items-center gap-2"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-[11px_13px_10px_14px/13px_10px_14px_11px] border-2 border-stone-900 bg-primary text-white shadow-[2px_2px_0px_rgba(30,30,30,0.85)]">
-            <MapPinned className="h-5 w-5" />
-          </span>
+          <img
+            src="/lostly-logo.jpg"
+            alt="Lostly logo"
+            className="h-10 w-10 rounded-[11px_13px_10px_14px/13px_10px_14px_11px] border-2 border-stone-900 object-cover shadow-[2px_2px_0px_rgba(30,30,30,0.85)]"
+          />
           <span className="font-display text-3xl font-bold leading-none text-stone-900">
             Lostly
           </span>
