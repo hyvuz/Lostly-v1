@@ -1,4 +1,4 @@
-import { MapPin, Clock, MessageCircle, HelpCircle } from "lucide-react";
+import { MapPin, Clock, MessageCircle, HelpCircle, Phone } from "lucide-react";
 import { iconForType, timeAgo } from "@/lib/lostly";
 
 export const ItemCard = ({ item, onClue, onToggleStatus }) => {
@@ -65,6 +65,18 @@ export const ItemCard = ({ item, onClue, onToggleStatus }) => {
               {item.approxTime ? ` · ${item.approxTime}` : ""}
             </span>
           </div>
+          {item.phone ? (
+            <div className="flex items-center gap-1.5">
+              <Phone className="h-4 w-4 shrink-0 text-primary" />
+              <a
+                href={`tel:${item.phone}`}
+                data-testid={`item-phone-${item.id}`}
+                className="line-clamp-1 font-medium text-stone-800 underline decoration-primary/50 underline-offset-2 hover:text-primary"
+              >
+                {item.phone}
+              </a>
+            </div>
+          ) : null}
         </div>
 
         {item.clues.length > 0 && (

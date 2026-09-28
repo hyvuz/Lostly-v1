@@ -45,6 +45,7 @@ export default function ReportForm({ onSubmit }) {
   const [notSureLocation, setNotSureLocation] = useState(false);
   const [whenOption, setWhenOption] = useState("");
   const [dateTime, setDateTime] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handlePhoto = async (e) => {
     const file = e.target.files?.[0];
@@ -88,6 +89,7 @@ export default function ReportForm({ onSubmit }) {
       location: notSureLocation ? "" : location.trim(),
       timeframe,
       approxTime,
+      phone: phone.trim(),
     });
     toast.success("Lost item posted!", {
       description: "Other students can now help you find it.",
@@ -173,6 +175,24 @@ export default function ReportForm({ onSubmit }) {
               className="rounded-xl border-2 border-stone-800"
             />
           </div>
+        </div>
+
+        <div className="mt-4">
+          <label className="mb-1 block text-sm font-semibold text-stone-700">
+            Contact phone number{" "}
+            <span className="font-normal text-stone-400">(optional)</span>
+          </label>
+          <Input
+            data-testid="item-phone-input"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="e.g. +1 555 123 4567"
+            className="rounded-xl border-2 border-stone-800"
+          />
+          <p className="mt-1 font-mono text-[11px] text-stone-400">
+            shown on your report so finders can reach you
+          </p>
         </div>
 
         <div className="mt-4">
