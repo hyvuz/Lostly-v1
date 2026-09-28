@@ -1,5 +1,4 @@
 import { MapPin, Clock, MessageCircle, HelpCircle } from "lucide-react";
-import { StatusBadge } from "@/components/StatusBadge";
 import { iconForType, timeAgo } from "@/lib/lostly";
 
 export const ItemCard = ({ item, onClue, onToggleStatus }) => {
@@ -30,7 +29,6 @@ export const ItemCard = ({ item, onClue, onToggleStatus }) => {
         <span className="absolute left-3 top-3 rounded-full border-2 border-stone-900 bg-white/90 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-stone-700 backdrop-blur">
           {item.itemType}
         </span>
-        <StatusBadge status={item.status} className="absolute right-3 top-3 bg-white/90 backdrop-blur" />
       </div>
 
       <div className="flex flex-1 flex-col p-4">
