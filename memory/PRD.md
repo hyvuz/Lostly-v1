@@ -24,8 +24,14 @@ Build a simple, modern web MVP called **Lostly** for university students who los
 ## Core Requirements (static)
 Report lost item quickly → others browse board → someone posts a clue → item can be marked Found.
 
+## Screens (Phase 2 — 2026-06-28)
+- `/` Splash (auto → Home, ~1.4s), `/home` landing hero + 2 CTAs, `/report` single-page sectioned form, `/board` Missing Items with grouped filters.
+- Routing via react-router-dom; header hidden on splash. State + localStorage in `App.js` Shell.
+- Report form: item-type cards, color/description, optional photo (resized data URL), location + "Not sure", when options incl. Choose Date/Time.
+- Board: search + category/time/status filter groups; compact cards with photo/icon strip, subtle Found treatment.
+- Verified by testing agent iteration_2: 100% frontend pass (12/12 areas).
+
 ## Implemented (2026-06-27)
-- 4-step conversational report flow with progress indicator, "Other" custom input, optional color/description, Yes/Not-sure location, timeframe + approx time, summary confirm.
 - Lost Items Board: cards with icon, title, description, location, time, status badge, clue count.
 - Search bar, category filters (All/Electronics/Personal Items/Bags/Other), status tabs.
 - "I might know something" clue modal; clues appended under item.
@@ -34,6 +40,3 @@ Report lost item quickly → others browse board → someone posts a clue → it
 - Verified by testing agent: 100% frontend pass (11/11 flows).
 
 ## Backlog / Remaining
-- P1: Report count / analytics summary strip on board.
-- P2: Sort options (newest/most clues), share-a-report link.
-- P2: "Found by me" contact hint on found items.
