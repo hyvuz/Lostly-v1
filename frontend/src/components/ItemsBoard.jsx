@@ -10,12 +10,6 @@ import {
   withinTimeFilter,
 } from "@/lib/lostly";
 
-const STATUS_FILTERS = [
-  { id: "all", label: "All" },
-  { id: "missing", label: "Still Missing" },
-  { id: "found", label: "Found" },
-];
-
 const FilterGroup = ({ label, children }) => (
   <div className="flex flex-wrap items-center gap-2">
     <span className="mr-1 font-mono text-[11px] uppercase tracking-wider text-stone-400">
@@ -46,20 +40,17 @@ export const ItemsBoard = ({ items, onAddClue, onToggleStatus }) => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [timeFilter, setTimeFilter] = useState("all");
-  const [status, setStatus] = useState("all");
   const [clueItem, setClueItem] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
 
   const activeFilterCount =
-    (category !== "all" ? 1 : 0) +
-    (timeFilter !== "all" ? 1 : 0) +
-    (status !== "all" ? 1 : 0);
+    (category !== "all" ? 1 : 0) + (timeFilter !== "all" ? 1 : 0);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items
+      .filter((it) => it.status !== "found")
       .filter((it) => (category === "all" ? true : it.category === category))
-      .filter((it) => (status === "all" ? true : it.status === status))
       .filter((it) => withinTimeFilter(it.createdAt, timeFilter))
       .filter((it) => {
         if (!q) return true;
@@ -71,7 +62,7 @@ export const ItemsBoard = ({ items, onAddClue, onToggleStatus }) => {
         );
       })
       .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-  }, [items, query, category, timeFilter, status]);
+  }, [items, query, category, timeFilter]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-6">
@@ -152,19 +143,6 @@ export const ItemsBoard = ({ items, onAddClue, onToggleStatus }) => {
                   testId={`time-chip-${f.id}`}
                   active={timeFilter === f.id}
                   onClick={() => setTimeFilter(f.id)}
-                >
-                  {f.label}
-                </Pill>
-              ))}
-            </FilterGroup>
-
-            <FilterGroup label="Status">
-              {STATUS_FILTERS.map((f) => (
-                <Pill
-                  key={f.id}
-                  testId={`status-chip-${f.id}`}
-                  active={status === f.id}
-                  onClick={() => setStatus(f.id)}
                 >
                   {f.label}
                 </Pill>
